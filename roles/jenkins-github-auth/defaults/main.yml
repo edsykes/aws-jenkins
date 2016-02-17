@@ -1,0 +1,4 @@
+---
+# defaults file for jenkins-github-auth
+
+jenkins_home: /var/lib/jenkins

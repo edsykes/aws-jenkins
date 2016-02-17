@@ -1,0 +1,12 @@
+#check if params are invalid then abort below all tasks.  
+- name: spin up a jenkins ci server
+  hosts: localhost
+  tasks:
+  - name: 'echo github_web_url'
+    command: echo {{ github_web_url }}
+  - name: 'check parm is null or invalid' 
+    fail: msg="you must pass github_web_url, github_api_url,  github_client_id, github_client_secret, see README.md for more details"
+    when: "github_web_url is not defined or github_api_url is not defined or github_client_id is not defined or github_client_secret is not defined " ## whatever condition you want
+
+- include: ec2.yaml
+- include: AmazonLinux.yml

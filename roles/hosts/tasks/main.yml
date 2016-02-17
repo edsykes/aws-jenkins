@@ -7,3 +7,6 @@
 
 - name: Ensure /etc/hosts populated
   template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=0644
+
+- name: upgrade all packages
+  yum: name=* state=latest

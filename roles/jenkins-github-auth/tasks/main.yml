@@ -1,0 +1,21 @@
+---
+# tasks file for jenkins
+
+- name: install the github auth plugin and modules
+  script: installplugin.sh github-oauth
+  sudo: yes
+
+- name: restart jenkins
+  command: service jenkins restart
+  sudo: yes
+
+- name: Wait untils Jenkins web API is available
+  shell: curl --head --silent http://localhost:8080/cli/
+  register: result
+  until: result.stdout.find("200 OK") != -1
+  retries: 12
+  delay: 5
+
+- name: set the global security
+  script: setglobalsec.sh {{ github_web_url }} {{ github_api_url }} {{ github_client_id }} {{ github_client_secret }}
+  sudo: yes
